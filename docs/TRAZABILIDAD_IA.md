@@ -98,6 +98,16 @@ A continuación se documentan las etapas críticas del proyecto donde se empleó
 * **Análisis Crítico y Corrección Humana Implementada:**
   Sin un checkpoint persistente y tolerante a fallos, si el job de Spark se detiene por reinicio de contenedor o saturación de memoria, Spark perdería los *offsets* de Kafka y re-procesaría todos los millones de mensajes desde el inicio (violando la semántica de entrega única). Se configuró un directorio de checkpoint persistente montado en volumen Docker (`data/checkpoints/bronze_ticks`) con triggers controlados de micro-lotes cada 5 segundos.
 
+### Etapa 5: Resolución de Compatibilidad en Entorno Distribuido (Scala 2.13, Winutils y Puertos)
+
+* **Prompt / Consulta a la IA:**
+  > *"PySpark 4.3.0 en Windows lanza error `NoSuchMethodError: 'scala.collection.mutable.WrappedArray'` y `HADOOP_HOME and hadoop.home.dir are unset` al intentar consumir de Kafka."*
+
+* **Detección del Problema y Validación Técnica Humana:**
+  1. **Conflicto de versiones Scala:** La configuración estándar sugerida por la IA usaba la librería `spark-sql-kafka-0-10_2.12:3.5.1` (Scala 2.12). Sin embargo, PySpark 4.3.0 corre sobre el runtime de Scala 2.13. Se corrigió apuntando al paquete exacto de Maven Central: `org.apache.spark:spark-sql-kafka-0-10_2.13:4.3.0`.
+  2. **Dependencia POSIX en Windows (Hadoop Winutils):** En Windows, el JVM de Hadoop busca utilidades nativas (`winutils.exe` y `hadoop.dll`). Se aprovisionaron en la carpeta `hadoop/bin` y se inyectaron en las variables de entorno dentro del código Python.
+  3. **Aislamiento de Puertos:** Para evitar colisiones con instancias previas de PostgreSQL en el puerto por defecto 5432, se redirigió el contenedor a `5433:5432`, garantizando que el Data Mart dimensional se persistiera limpiamente en la base de datos de Docker.
+
 ---
 
 ## 3. Conclusión de la Evaluación de IA
