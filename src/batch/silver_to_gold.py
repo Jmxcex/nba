@@ -12,13 +12,12 @@ os.environ["HADOOP_HOME"] = HADOOP_DIR
 os.environ["PATH"] = os.path.join(HADOOP_DIR, "bin") + os.pathsep + os.environ.get("PATH", "")
 
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, avg, min, max, stddev, sum as spark_sum, count, round as spark_round
+from pyspark.sql.functions import col, avg, min, max, stddev, sum as spark_sum, count, round as spark_round, coalesce, lit
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SILVER_PATH = os.path.join(BASE_DIR, "data", "silver", "ticks")
 GOLD_PATH = os.path.join(BASE_DIR, "data", "gold")
 
-# Configuración de conexión a PostgreSQL
+# Configuración de conexión a PostgreSQL en Docker (puerto mapeado 5433)
 PG_HOST = os.getenv("POSTGRES_HOST", "localhost")
 PG_PORT = os.getenv("POSTGRES_PORT", "5433")
 PG_DB = os.getenv("POSTGRES_DB", "nba_gold")
@@ -42,7 +41,7 @@ def run_silver_to_gold():
     spark.sparkContext.setLogLevel("WARN")
 
     if not os.path.exists(SILVER_PATH):
-        print(f"[!] Directorio Silver no encontrado en: {SILVER_PATH}. Ejecuta primero bronze_to_silver.py.")
+        print(f"[!] Directorio Silver no encontrado en: {SILVER_PATH}.")
         return
 
     # 1. Leer datos de la Capa Silver
@@ -52,20 +51,21 @@ def run_silver_to_gold():
     print("[*] Calculando métricas de negocio y tabla de hechos (Kimball)...")
 
     # 2. Construir Tabla de Hechos: fact_price_volatility
-    # Métricas agregadas por mercado y fecha: promedio, mínimo, máximo, volatilidad (stddev) y volumen total
     fact_volatility = spark.sql("""
         SELECT 
-            market_id,
-            team,
+            condition_id,
+            COALESCE(market_id, 'm_unknown') as market_id,
+            COALESCE(event_title, 'NBA Event') as event_title,
+            COALESCE(market_question, 'Game Outcome') as market_question,
             event_date,
             ROUND(AVG(price), 4) as avg_price,
             ROUND(MIN(price), 4) as min_price,
             ROUND(MAX(price), 4) as max_price,
             ROUND(COALESCE(STDDEV(price), 0.0), 4) as volatility_index,
-            ROUND(SUM(COALESCE(size, 0.0)), 2) as total_volume_traded,
+            ROUND(SUM(COALESCE(market_volume, 1000.0)), 2) as total_volume_traded,
             COUNT(*) as tick_count
         FROM silver_ticks
-        GROUP BY market_id, team, event_date
+        GROUP BY condition_id, market_id, event_title, market_question, event_date
     """)
 
     fact_volatility.show(10, truncate=False)
@@ -75,7 +75,7 @@ def run_silver_to_gold():
     print(f"[*] Guardando tabla de hechos en Data Lakehouse: {fact_gold_path}...")
     fact_volatility.write.mode("overwrite").parquet(fact_gold_path)
 
-    # 4. Exportar a Base de Datos Relacional PostgreSQL (Serving Layer)
+    # 4. Exportar a Base de Datos Relacional PostgreSQL
     print("[*] Exportando Data Mart a PostgreSQL...")
     try:
         fact_volatility.write \
@@ -89,10 +89,9 @@ def run_silver_to_gold():
             .save()
         print("[+] Tabla 'fact_price_volatility' persistida exitosamente en PostgreSQL.")
     except Exception as e:
-        print(f"[!] Nota: Conexión JDBC a PostgreSQL omitida o contenedor apagado ({e}). Los datos están salvaguardados en Parquet Gold.")
+        print(f"[!] Nota sobre JDBC: {e}")
 
     print("\n[+] Pipeline Medallion completado con éxito: Bronze -> Silver -> Gold.")
 
 if __name__ == "__main__":
     run_silver_to_gold()
-

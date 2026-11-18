@@ -39,14 +39,12 @@ def run_bronze_stream():
 
     spark.sparkContext.setLogLevel("WARN")
 
-    # 2. Definir esquema estricto de los eventos de Kafka
+    # 2. Definir esquema estricto de los eventos de Kafka (epinnock/polymarket-nba)
     schema = StructType([
-        StructField("market_id", StringType(), True),
+        StructField("condition_id", StringType(), True),
+        StructField("token_id", StringType(), True),
         StructField("timestamp", LongType(), True),
         StructField("price", DoubleType(), True),
-        StructField("size", DoubleType(), True),
-        StructField("side", StringType(), True),
-        StructField("team", StringType(), True),
         StructField("source", StringType(), True)
     ])
 
