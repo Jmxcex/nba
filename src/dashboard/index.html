@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NBA Big Data Analytics | Medallion Architecture</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-950 text-gray-100 min-h-screen p-6">
+    <div class="max-w-7xl mx-auto space-y-6">
+        
+        <!-- Header -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center bg-gray-900/80 backdrop-blur border border-gray-800 rounded-2xl p-6 shadow-xl">
+            <div>
+                <div class="flex items-center space-x-3">
+                    <span class="text-3xl">🏀</span>
+                    <h1 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent">
+                        NBA Game & Market Intelligence
+                    </h1>
+                </div>
+                <p class="text-sm text-gray-400 mt-1">
+                    Plataforma Big Data en Streaming: 
+                    <span class="text-cyan-400 font-semibold">Apache Kafka</span> • 
+                    <span class="text-orange-400 font-semibold">Apache Spark</span> • 
+                    <span class="text-blue-400 font-semibold">PostgreSQL</span> • 
+                    <span class="text-emerald-400 font-semibold">Medallion Architecture</span>
+                </p>
+            </div>
+            <div class="mt-4 md:mt-0 flex items-center space-x-2">
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping mr-2"></span>
+                    Lakehouse Activo
+                </span>
+                <a href="http://localhost:8085" target="_blank" class="px-3 py-1 bg-gray-800 hover:bg-gray-700 text-xs font-semibold rounded-lg border border-gray-700 transition">
+                    Abrir Kafka UI ↗
+                </a>
+            </div>
+        </div>
+
+        <!-- KPI Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="bg-gray-900 border border-gray-800 rounded-xl p-5 shadow-lg">
+                <div class="text-xs uppercase tracking-wider text-gray-400 font-semibold">Eventos Procesados (Bronze)</div>
+                <div class="text-3xl font-bold text-cyan-400 mt-2">46,943</div>
+                <div class="text-xs text-emerald-400 mt-1 flex items-center">✓ Ingesta Streaming OK</div>
+            </div>
+            <div class="bg-gray-900 border border-gray-800 rounded-xl p-5 shadow-lg">
+                <div class="text-xs uppercase tracking-wider text-gray-400 font-semibold">Volumen Total Transado</div>
+                <div class="text-3xl font-bold text-emerald-400 mt-2">$118,721,090.76</div>
+                <div class="text-xs text-gray-400 mt-1">Mercados predictivos NBA</div>
+            </div>
+            <div class="bg-gray-900 border border-gray-800 rounded-xl p-5 shadow-lg">
+                <div class="text-xs uppercase tracking-wider text-gray-400 font-semibold">Probabilidad Implícita Media</div>
+                <div class="text-3xl font-bold text-amber-400 mt-2">49.8%</div>
+                <div class="text-xs text-gray-400 mt-1">Normalizado entre 0 y 100%</div>
+            </div>
+            <div class="bg-gray-900 border border-gray-800 rounded-xl p-5 shadow-lg">
+                <div class="text-xs uppercase tracking-wider text-gray-400 font-semibold">Mercados Agregados (Gold)</div>
+                <div class="text-3xl font-bold text-purple-400 mt-2">50</div>
+                <div class="text-xs text-purple-400 mt-1">Persistidos en PostgreSQL</div>
+            </div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 shadow-lg">
+                <div style="height:400px; width:100%;">                            <div id="2d1cbba6-236a-432b-a58b-b010d5011477" class="plotly-graph-div" style="height:100%; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("2d1cbba6-236a-432b-a58b-b010d5011477")) {                    Plotly.newPlot(                        "2d1cbba6-236a-432b-a58b-b010d5011477",                        [{"hovertemplate":"Equipo NBA=%{x}\u003cbr\u003eProbabilidad Impl\u00edcita (0 a 1)=%{marker.color}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"","marker":{"color":{"dtype":"f8","bdata":"jKIHPgYr4D9zY3rCEg\u002fgP9\u002fF+3H75d8\u002fvFzEd2LW3z9lG7gDdcrfP0+UhETaxt8\u002fesVTjzS43z9YiXlW0orfPw=="},"coloraxis":"coloraxis","pattern":{"shape":""}},"name":"","orientation":"v","showlegend":false,"textposition":"auto","x":["DEN","MIA","BOS","DAL","MIL","GSW","LAL","PHX"],"xaxis":"x","y":{"dtype":"f8","bdata":"jKIHPgYr4D9zY3rCEg\u002fgP9\u002fF+3H75d8\u002fvFzEd2LW3z9lG7gDdcrfP0+UhETaxt8\u002fesVTjzS43z9YiXlW0orfPw=="},"yaxis":"y","type":"bar"}],                        {"template":{"data":{"barpolar":[{"marker":{"line":{"color":"rgb(17,17,17)","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"bar":[{"error_x":{"color":"#f2f5fa"},"error_y":{"color":"#f2f5fa"},"marker":{"line":{"color":"rgb(17,17,17)","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"carpet":[{"aaxis":{"endlinecolor":"#A2B1C6","gridcolor":"#506784","linecolor":"#506784","minorgridcolor":"#506784","startlinecolor":"#A2B1C6"},"baxis":{"endlinecolor":"#A2B1C6","gridcolor":"#506784","linecolor":"#506784","minorgridcolor":"#506784","startlinecolor":"#A2B1C6"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"line":{"color":"#283442"}},"type":"scattergl"}],"scattermap":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermap"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatter":[{"marker":{"line":{"color":"#283442"}},"type":"scatter"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#506784"},"line":{"color":"rgb(17,17,17)"}},"header":{"fill":{"color":"#2a3f5f"},"line":{"color":"rgb(17,17,17)"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#f2f5fa","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#f2f5fa"},"geo":{"bgcolor":"rgb(17,17,17)","lakecolor":"rgb(17,17,17)","landcolor":"rgb(17,17,17)","showlakes":true,"showland":true,"subunitcolor":"#506784"},"hoverlabel":{"align":"left"},"hovermode":"closest","paper_bgcolor":"rgb(17,17,17)","plot_bgcolor":"rgb(17,17,17)","polar":{"angularaxis":{"gridcolor":"#506784","linecolor":"#506784","ticks":""},"bgcolor":"rgb(17,17,17)","radialaxis":{"gridcolor":"#506784","linecolor":"#506784","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"rgb(17,17,17)","gridcolor":"#506784","gridwidth":2,"linecolor":"#506784","showbackground":true,"ticks":"","zerolinecolor":"#C8D4E3"},"yaxis":{"backgroundcolor":"rgb(17,17,17)","gridcolor":"#506784","gridwidth":2,"linecolor":"#506784","showbackground":true,"ticks":"","zerolinecolor":"#C8D4E3"},"zaxis":{"backgroundcolor":"rgb(17,17,17)","gridcolor":"#506784","gridwidth":2,"linecolor":"#506784","showbackground":true,"ticks":"","zerolinecolor":"#C8D4E3"}},"shapedefaults":{"line":{"color":"#f2f5fa"}},"sliderdefaults":{"bgcolor":"#C8D4E3","bordercolor":"rgb(17,17,17)","borderwidth":1,"tickwidth":0},"ternary":{"aaxis":{"gridcolor":"#506784","linecolor":"#506784","ticks":""},"baxis":{"gridcolor":"#506784","linecolor":"#506784","ticks":""},"bgcolor":"rgb(17,17,17)","caxis":{"gridcolor":"#506784","linecolor":"#506784","ticks":""}},"title":{"x":0.05},"updatemenudefaults":{"bgcolor":"#506784","borderwidth":0},"xaxis":{"automargin":true,"gridcolor":"#283442","linecolor":"#506784","ticks":"","title":{"standoff":15},"zerolinecolor":"#283442","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"#283442","linecolor":"#506784","ticks":"","title":{"standoff":15},"zerolinecolor":"#283442","zerolinewidth":2}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"Equipo NBA"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"Probabilidad Impl\u00edcita (0 a 1)"}},"coloraxis":{"colorbar":{"title":{"text":"Probabilidad Impl\u00edcita (0 a 1)"}},"colorscale":[[0.0,"rgb(176, 242, 188)"],[0.16666666666666666,"rgb(137, 232, 172)"],[0.3333333333333333,"rgb(103, 219, 165)"],[0.5,"rgb(76, 200, 163)"],[0.6666666666666666,"rgb(56, 178, 163)"],[0.8333333333333334,"rgb(44, 152, 160)"],[1.0,"rgb(37, 125, 152)"]],"autocolorscale":false},"legend":{"tracegroupgap":0},"title":{"text":"\u003cb\u003eProbabilidad Impl\u00edcita de Victoria por Equipo\u003c\u002fb\u003e"},"barmode":"relative","margin":{"l":20,"r":20,"t":50,"b":20},"height":400},                        {"responsive": true}                    )                };            </script>        </div>
+            </div>
+            <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 shadow-lg">
+                <div style="height:400px; width:100%;">                            <div id="70cc0bd1-1150-4b71-985d-b923fd027263" class="plotly-graph-div" style="height:100%; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("70cc0bd1-1150-4b71-985d-b923fd027263")) {                    Plotly.newPlot(                        "70cc0bd1-1150-4b71-985d-b923fd027263",                        [{"hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eteam=MIL\u003cbr\u003eVolumen Transado ($ USD)=%{x}\u003cbr\u003e\u00cdndice de Volatilidad (StdDev)=%{y}\u003cbr\u003etick_count=%{marker.size}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["market_nba_100","market_nba_107","market_nba_110","market_nba_112","market_nba_115","market_nba_117","market_nba_120","market_nba_121","market_nba_122","market_nba_127","market_nba_128","market_nba_134","market_nba_139","market_nba_145"],"legendgroup":"MIL","marker":{"color":"#636efa","size":{"dtype":"i2","bdata":"dwB0AHEAcQBtAIMAfAB2AGwAgAB4AGcAjgBuAA=="},"sizemode":"area","sizeref":0.365,"symbol":"circle"},"mode":"markers","name":"MIL","orientation":"v","showlegend":true,"x":{"dtype":"f8","bdata":"UrgehdIlE0FSuB6FKCwTQYXrUbifKhFBhetRuAgHEUHXo3A9nSsRQXE9CtduhBVBmpmZmXj\u002fEkGuR+F68OIRQRSuR+Gs0xBBpHA9CjwMFEE9CtejywcSQa5H4XpvcRBBw\u002fUoXHtcF0FmZmZmBZoQQQ=="},"xaxis":"x","y":{"dtype":"f8","bdata":"4L4OnDOizD+WIY51cRvNP7bz\u002fdR46c4\u002fj+TyH9Jvzz88vVKWIY7NPyxlGeJYF88\u002fTx4Wak3zzj+VZYhjXdzOP\u002fd14JwRpc0\u002f1edqK\u002faXzT+Sy39Iv33NPwrXo3A9Cs8\u002fzczMzMzMzD8lBoGVQ4vMPw=="},"yaxis":"y","type":"scatter"},{"hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eteam=GSW\u003cbr\u003eVolumen Transado ($ USD)=%{x}\u003cbr\u003e\u00cdndice de Volatilidad (StdDev)=%{y}\u003cbr\u003etick_count=%{marker.size}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["market_nba_100","market_nba_103","market_nba_106","market_nba_107","market_nba_114","market_nba_124","market_nba_132","market_nba_133","market_nba_135","market_nba_136","market_nba_137","market_nba_138","market_nba_144","market_nba_147"],"legendgroup":"GSW","marker":{"color":"#EF553B","size":{"dtype":"i2","bdata":"dwB\u002fAHgAewBpAH4AcgCFAHUAeAB9AG0AbAByAA=="},"sizemode":"area","sizeref":0.365,"symbol":"circle"},"mode":"markers","name":"GSW","orientation":"v","showlegend":true,"x":{"dtype":"f8","bdata":"CtejcNFHEEF7FK5HPdcTQa5H4XppCBNBexSuRyreE0EfhetRV3cQQexRuB5qJBNBKVyPwp1aEkEpXI\u002fCenITQRSuR+FrYRFBH4XrURSTEUEK16NwDZwTQfYoXI+XTRBB9ihcjwpVEEG4HoXrUKQRQQ=="},"xaxis":"x","y":{"dtype":"f8","bdata":"3gIJih9jzj9\u002farx0kxjMP2gibHh6pcw\u002f+zpwzojSzj9d3EYDeAvMPxKDwMqhRc4\u002ftTf4wmSq0D9t5\u002fup8dLNP7IubqMBvM0\u002fpb3BFyZTzT9VMCqpE9DMP6Fns+pztc0\u002fPujZrPpczT\u002fD9Shcj8LNPw=="},"yaxis":"y","type":"scatter"},{"hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eteam=DEN\u003cbr\u003eVolumen Transado ($ USD)=%{x}\u003cbr\u003e\u00cdndice de Volatilidad (StdDev)=%{y}\u003cbr\u003etick_count=%{marker.size}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["market_nba_100","market_nba_107","market_nba_108","market_nba_113","market_nba_116","market_nba_129","market_nba_131","market_nba_137","market_nba_144"],"legendgroup":"DEN","marker":{"color":"#00cc96","size":{"dtype":"i2","bdata":"YgB0AGIAdABuAHUAjABzAHcA"},"sizemode":"area","sizeref":0.365,"symbol":"circle"},"mode":"markers","name":"DEN","orientation":"v","showlegend":true,"x":{"dtype":"f8","bdata":"UrgehRXmDkGkcD0KcYURQexRuB5yuxFBCtejcNG+EEHsUbgeDBkRQfYoXI8wBA9BFK5H4cLYFkGF61G4R6IRQbgeheuakBJB"},"xaxis":"x","y":{"dtype":"f8","bdata":"3GgAb4EEzT93LSEf9GzOPxkEVg4tss0\u002frthfdk8ezj+7uI0G8BbQP7pJDAIrh84\u002frK3YX3ZPzj+IhVrTvOPMP+cdp+hILs8\u002f"},"yaxis":"y","type":"scatter"},{"hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eteam=LAL\u003cbr\u003eVolumen Transado ($ USD)=%{x}\u003cbr\u003e\u00cdndice de Volatilidad (StdDev)=%{y}\u003cbr\u003etick_count=%{marker.size}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["market_nba_102","market_nba_103","market_nba_109","market_nba_111","market_nba_113","market_nba_130","market_nba_133","market_nba_134","market_nba_135","market_nba_140","market_nba_142"],"legendgroup":"LAL","marker":{"color":"#ab63fa","size":{"dtype":"i2","bdata":"fAB4AH0AbgBqAHwAawBzAHAAbwCAAA=="},"sizemode":"area","sizeref":0.365,"symbol":"circle"},"mode":"markers","name":"LAL","orientation":"v","showlegend":true,"x":{"dtype":"f8","bdata":"ZmZmZnKrEkEUrkfhEFgSQVK4HoVaqxFBw\u002fUoXDc4EUEUrkfh7v8OQSlcj8IIHxJBMzMzM1nhD0FmZmZm+QIQQR+F61FOIBBBSOF6FDv4EEHhehSudlEUQQ=="},"xaxis":"x","y":{"dtype":"f8","bdata":"ZvfkYaHWzD99rrZif9nNP\u002fW52or9Zc8\u002fdQKaCBuezj9g5dAi2\u002fnOP2gibHh6pcw\u002fdZMYBFYOzT\u002fHKTqSy3\u002fQPzJ3LSEf9Mw\u002fQj7o2az6zD+28\u002f3UeOnOPw=="},"yaxis":"y","type":"scatter"},{"hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eteam=DAL\u003cbr\u003eVolumen Transado ($ USD)=%{x}\u003cbr\u003e\u00cdndice de Volatilidad (StdDev)=%{y}\u003cbr\u003etick_count=%{marker.size}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["market_nba_103","market_nba_105","market_nba_109","market_nba_120","market_nba_127","market_nba_132","market_nba_135","market_nba_139","market_nba_146","market_nba_147"],"legendgroup":"DAL","marker":{"color":"#FFA15A","size":{"dtype":"i2","bdata":"kgB+AFoAdgBsAGUAaABxAHUAagA="},"sizemode":"area","sizeref":0.365,"symbol":"circle"},"mode":"markers","name":"DAL","orientation":"v","showlegend":true,"x":{"dtype":"f8","bdata":"mpmZmZpzFkE9CtejzDAUQfYoXI8+bgtBAAAAAOreEUHsUbgeu1YSQbgeheu1bw1BzczMzLrAD0FSuB6FzR8RQUjhehRDhBJBpHA9CtAOEEE="},"xaxis":"x","y":{"dtype":"f8","bdata":"4lgXt9EAzj\u002fiWBe30QDOP6+UZYhjXcw\u002fZohjXdxGyz86kst\u002fSL\u002fNP8P1KFyPws0\u002fL90kBoGVyz8jSnuDL0zOPx1aZDvfT80\u002fmEwVjErqzD8="},"yaxis":"y","type":"scatter"},{"hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eteam=PHX\u003cbr\u003eVolumen Transado ($ USD)=%{x}\u003cbr\u003e\u00cdndice de Volatilidad (StdDev)=%{y}\u003cbr\u003etick_count=%{marker.size}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["market_nba_103","market_nba_105","market_nba_110","market_nba_111","market_nba_112","market_nba_113","market_nba_115","market_nba_116","market_nba_118","market_nba_120","market_nba_129","market_nba_132","market_nba_134","market_nba_138","market_nba_143","market_nba_147","market_nba_148"],"legendgroup":"PHX","marker":{"color":"#19d3f3","size":{"dtype":"i2","bdata":"agCOAHcAcwB0AHUAfwCFAH0AfgB9AIwAdgB6AH4AdgB\u002fAA=="},"sizemode":"area","sizeref":0.365,"symbol":"circle"},"mode":"markers","name":"PHX","orientation":"v","showlegend":true,"x":{"dtype":"f8","bdata":"16NwPU6pD0EzMzMzgj4VQa5H4XqhzRJBSOF6FOQYE0FSuB6FD1oSQcP1KFzWzxBBH4XrUZX7E0EzMzMzIGoUQRSuR+G0MxNBPQrXo7t1EkEUrkfhSYITQQAAAACuRBVB9ihcjz7pEEHD9Shcl24SQZqZmZlb7xNBMzMzM1rGEUE9Ctej0EETQQ=="},"xaxis":"x","y":{"dtype":"f8","bdata":"07zjFB3JzT8Wak3zjlPMP2gibHh6pcw\u002ftoR80LNZzT8jSnuDL0zOP0vqBDQRNsw\u002fwFsgQfFjzD9XW7G\u002f7J7MP5vmHafoSM4\u002fGy\u002fdJAaBzT\u002fsL7snDwvNP+\u002fJw0Ktac4\u002fQj7o2az6zD9vEoPAyqHNP7TIdr6fGs8\u002fJzEIrBxazD+28\u002f3UeOnOPw=="},"yaxis":"y","type":"scatter"},{"hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eteam=BOS\u003cbr\u003eVolumen Transado ($ USD)=%{x}\u003cbr\u003e\u00cdndice de Volatilidad (StdDev)=%{y}\u003cbr\u003etick_count=%{marker.size}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["market_nba_103","market_nba_104","market_nba_117","market_nba_118","market_nba_121","market_nba_125","market_nba_128","market_nba_136","market_nba_140","market_nba_145","market_nba_146"],"legendgroup":"BOS","marker":{"color":"#FF6692","size":{"dtype":"i2","bdata":"YwBkAIIAcgCIAGIAdACMAHoAcwB5AA=="},"sizemode":"area","sizeref":0.365,"symbol":"circle"},"mode":"markers","name":"BOS","orientation":"v","showlegend":true,"x":{"dtype":"f8","bdata":"w\u002fUoXD8LD0GkcD0KdaINQdejcD3ZdhNBmpmZmYvVEUF7FK5HXpcWQexRuB5v6w9BzczMzK\u002fWEUGPwvUo4cIXQfYoXI9ySxNBH4XrUbryEUGkcD0KTxkTQQ=="},"xaxis":"x","y":{"dtype":"f8","bdata":"bqMBvAUSzD+QMXctIR\u002fMP+oENBE2PM0\u002fQ61p3nGKzj9qTfOOU3TMP1kXt9EA3so\u002fIbByaJHtzD+BBMWPMXfNP\u002fd14JwRpc0\u002fbqMBvAUSzD+hZ7Pqc7XNPw=="},"yaxis":"y","type":"scatter"},{"hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eteam=MIA\u003cbr\u003eVolumen Transado ($ USD)=%{x}\u003cbr\u003e\u00cdndice de Volatilidad (StdDev)=%{y}\u003cbr\u003etick_count=%{marker.size}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["market_nba_104","market_nba_105","market_nba_109","market_nba_112","market_nba_113","market_nba_117","market_nba_122","market_nba_123","market_nba_128","market_nba_130","market_nba_131","market_nba_134","market_nba_143","market_nba_144"],"legendgroup":"MIA","marker":{"color":"#B6E880","size":{"dtype":"i2","bdata":"gABoAGAAdACBAG4AcQCJAGsAbQCIAHkAawCAAA=="},"sizemode":"area","sizeref":0.365,"symbol":"circle"},"mode":"markers","name":"MIA","orientation":"v","showlegend":true,"x":{"dtype":"f8","bdata":"XI\u002fC9TayE0EUrkfhqCgOQTMzMzN31ApBAAAAADlEEUEzMzMzybsSQZqZmZlUchJB16NwPRdnEUEzMzMz9JwWQeF6FK6WZBBBw\u002fUoXHJOEUGuR+F6h4UWQfYoXI\u002flFRFBXI\u002fC9cf8EEEUrkfh0IoUQQ=="},"xaxis":"x","y":{"dtype":"f8","bdata":"sp3vp8ZLzz8UP8bctYTMP2Dl0CLb+c4\u002fXdxGA3gL0D9JLv8h\u002ffbNP2pN845TdMw\u002fFmpN845TzD84Z0Rpb\u002fDNP9zXgXNGlM4\u002f+8vuycNCzT9UdCSX\u002f5DOP9cS8kHPZs0\u002fkKD4MeauzT8UrkfhehTOPw=="},"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"barpolar":[{"marker":{"line":{"color":"rgb(17,17,17)","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"bar":[{"error_x":{"color":"#f2f5fa"},"error_y":{"color":"#f2f5fa"},"marker":{"line":{"color":"rgb(17,17,17)","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"carpet":[{"aaxis":{"endlinecolor":"#A2B1C6","gridcolor":"#506784","linecolor":"#506784","minorgridcolor":"#506784","startlinecolor":"#A2B1C6"},"baxis":{"endlinecolor":"#A2B1C6","gridcolor":"#506784","linecolor":"#506784","minorgridcolor":"#506784","startlinecolor":"#A2B1C6"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"line":{"color":"#283442"}},"type":"scattergl"}],"scattermap":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermap"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatter":[{"marker":{"line":{"color":"#283442"}},"type":"scatter"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#506784"},"line":{"color":"rgb(17,17,17)"}},"header":{"fill":{"color":"#2a3f5f"},"line":{"color":"rgb(17,17,17)"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#f2f5fa","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#f2f5fa"},"geo":{"bgcolor":"rgb(17,17,17)","lakecolor":"rgb(17,17,17)","landcolor":"rgb(17,17,17)","showlakes":true,"showland":true,"subunitcolor":"#506784"},"hoverlabel":{"align":"left"},"hovermode":"closest","paper_bgcolor":"rgb(17,17,17)","plot_bgcolor":"rgb(17,17,17)","polar":{"angularaxis":{"gridcolor":"#506784","linecolor":"#506784","ticks":""},"bgcolor":"rgb(17,17,17)","radialaxis":{"gridcolor":"#506784","linecolor":"#506784","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"rgb(17,17,17)","gridcolor":"#506784","gridwidth":2,"linecolor":"#506784","showbackground":true,"ticks":"","zerolinecolor":"#C8D4E3"},"yaxis":{"backgroundcolor":"rgb(17,17,17)","gridcolor":"#506784","gridwidth":2,"linecolor":"#506784","showbackground":true,"ticks":"","zerolinecolor":"#C8D4E3"},"zaxis":{"backgroundcolor":"rgb(17,17,17)","gridcolor":"#506784","gridwidth":2,"linecolor":"#506784","showbackground":true,"ticks":"","zerolinecolor":"#C8D4E3"}},"shapedefaults":{"line":{"color":"#f2f5fa"}},"sliderdefaults":{"bgcolor":"#C8D4E3","bordercolor":"rgb(17,17,17)","borderwidth":1,"tickwidth":0},"ternary":{"aaxis":{"gridcolor":"#506784","linecolor":"#506784","ticks":""},"baxis":{"gridcolor":"#506784","linecolor":"#506784","ticks":""},"bgcolor":"rgb(17,17,17)","caxis":{"gridcolor":"#506784","linecolor":"#506784","ticks":""}},"title":{"x":0.05},"updatemenudefaults":{"bgcolor":"#506784","borderwidth":0},"xaxis":{"automargin":true,"gridcolor":"#283442","linecolor":"#506784","ticks":"","title":{"standoff":15},"zerolinecolor":"#283442","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"#283442","linecolor":"#506784","ticks":"","title":{"standoff":15},"zerolinecolor":"#283442","zerolinewidth":2}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"Volumen Transado ($ USD)"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"\u00cdndice de Volatilidad (StdDev)"}},"legend":{"title":{"text":"team"},"tracegroupgap":0,"itemsizing":"constant"},"title":{"text":"\u003cb\u003e\u00cdndice de Volatilidad vs. Volumen Transado por Mercado\u003c\u002fb\u003e"},"margin":{"l":20,"r":20,"t":50,"b":20},"height":400},                        {"responsive": true}                    )                };            </script>        </div>
+            </div>
+        </div>
+
+        <!-- Medallion Architecture Badges -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-amber-950/20 border border-amber-800/40 rounded-xl p-4">
+                <div class="font-bold text-amber-400 flex items-center">
+                    <span class="mr-2">🥉</span> Capa Bronze (Raw)
+                </div>
+                <p class="text-xs text-gray-400 mt-1">
+                    Eventos crudos en formato Parquet desde Apache Kafka con offsets, timestamps y checkpoints.
+                </p>
+            </div>
+            <div class="bg-slate-900 border border-slate-700 rounded-xl p-4">
+                <div class="font-bold text-slate-300 flex items-center">
+                    <span class="mr-2">🥈</span> Capa Silver (Cleansed)
+                </div>
+                <p class="text-xs text-gray-400 mt-1">
+                    Deduplicación por hash temporal, filtrado de outliers físicos y Broadcast Join dimensional en Spark.
+                </p>
+            </div>
+            <div class="bg-yellow-950/20 border border-yellow-700/40 rounded-xl p-4">
+                <div class="font-bold text-yellow-400 flex items-center">
+                    <span class="mr-2">🥇</span> Capa Gold (Curated / Mart)
+                </div>
+                <p class="text-xs text-gray-400 mt-1">
+                    Modelo dimensional Kimball con tabla de hechos <code class="text-yellow-300">fact_price_volatility</code> en PostgreSQL.
+                </p>
+            </div>
+        </div>
+
+        <!-- Data Table (Gold Data Mart) -->
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-5 shadow-lg overflow-hidden">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-bold text-white">Tabla de Hechos: <code class="text-amber-400 font-mono">fact_price_volatility</code> (Capa Gold)</h2>
+                <span class="text-xs text-gray-500">Muestra de registros en PostgreSQL / Parquet</span>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm text-gray-300">
+                    <thead class="text-xs uppercase bg-gray-800/60 text-gray-400 border-b border-gray-700">
+                        <tr>
+                            <th class="px-4 py-3">Market ID</th>
+                            <th class="px-4 py-3">Equipo</th>
+                            <th class="px-4 py-3">Fecha</th>
+                            <th class="px-4 py-3">Precio Promedio</th>
+                            <th class="px-4 py-3">Índice Volatilidad</th>
+                            <th class="px-4 py-3">Volumen Transado</th>
+                            <th class="px-4 py-3">Conteo Ticks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+        <tr class="border-b border-gray-800 hover:bg-gray-800/50">
+            <td class="px-4 py-3 font-mono text-cyan-400">market_nba_100</td>
+            <td class="px-4 py-3 font-semibold text-white">MIL</td>
+            <td class="px-4 py-3 text-gray-400">2026-11-17</td>
+            <td class="px-4 py-3 text-emerald-400 font-mono">0.5232</td>
+            <td class="px-4 py-3 text-amber-400 font-mono">0.2237</td>
+            <td class="px-4 py-3 text-gray-200 font-mono">$313,716.63</td>
+            <td class="px-4 py-3 text-purple-400 font-mono">119</td>
+        </tr>
+        
+        <tr class="border-b border-gray-800 hover:bg-gray-800/50">
+            <td class="px-4 py-3 font-mono text-cyan-400">market_nba_100</td>
+            <td class="px-4 py-3 font-semibold text-white">GSW</td>
+            <td class="px-4 py-3 text-gray-400">2026-11-17</td>
+            <td class="px-4 py-3 text-emerald-400 font-mono">0.5177</td>
+            <td class="px-4 py-3 text-amber-400 font-mono">0.2374</td>
+            <td class="px-4 py-3 text-gray-200 font-mono">$266,740.36</td>
+            <td class="px-4 py-3 text-purple-400 font-mono">119</td>
+        </tr>
+        
+        <tr class="border-b border-gray-800 hover:bg-gray-800/50">
+            <td class="px-4 py-3 font-mono text-cyan-400">market_nba_100</td>
+            <td class="px-4 py-3 font-semibold text-white">DEN</td>
+            <td class="px-4 py-3 text-gray-400">2026-11-17</td>
+            <td class="px-4 py-3 text-emerald-400 font-mono">0.5407</td>
+            <td class="px-4 py-3 text-amber-400 font-mono">0.2267</td>
+            <td class="px-4 py-3 text-gray-200 font-mono">$253,122.69</td>
+            <td class="px-4 py-3 text-purple-400 font-mono">98</td>
+        </tr>
+        
+        <tr class="border-b border-gray-800 hover:bg-gray-800/50">
+            <td class="px-4 py-3 font-mono text-cyan-400">market_nba_102</td>
+            <td class="px-4 py-3 font-semibold text-white">LAL</td>
+            <td class="px-4 py-3 text-gray-400">2026-11-17</td>
+            <td class="px-4 py-3 text-emerald-400 font-mono">0.4780</td>
+            <td class="px-4 py-3 text-amber-400 font-mono">0.2253</td>
+            <td class="px-4 py-3 text-gray-200 font-mono">$305,884.60</td>
+            <td class="px-4 py-3 text-purple-400 font-mono">124</td>
+        </tr>
+        
+        <tr class="border-b border-gray-800 hover:bg-gray-800/50">
+            <td class="px-4 py-3 font-mono text-cyan-400">market_nba_103</td>
+            <td class="px-4 py-3 font-semibold text-white">DAL</td>
+            <td class="px-4 py-3 text-gray-400">2026-11-17</td>
+            <td class="px-4 py-3 text-emerald-400 font-mono">0.4892</td>
+            <td class="px-4 py-3 text-amber-400 font-mono">0.2344</td>
+            <td class="px-4 py-3 text-gray-200 font-mono">$367,846.65</td>
+            <td class="px-4 py-3 text-purple-400 font-mono">146</td>
+        </tr>
+        
+        <tr class="border-b border-gray-800 hover:bg-gray-800/50">
+            <td class="px-4 py-3 font-mono text-cyan-400">market_nba_103</td>
+            <td class="px-4 py-3 font-semibold text-white">PHX</td>
+            <td class="px-4 py-3 text-gray-400">2026-11-17</td>
+            <td class="px-4 py-3 text-emerald-400 font-mono">0.5211</td>
+            <td class="px-4 py-3 text-amber-400 font-mono">0.2327</td>
+            <td class="px-4 py-3 text-gray-200 font-mono">$259,369.78</td>
+            <td class="px-4 py-3 text-purple-400 font-mono">106</td>
+        </tr>
+        
+        <tr class="border-b border-gray-800 hover:bg-gray-800/50">
+            <td class="px-4 py-3 font-mono text-cyan-400">market_nba_103</td>
+            <td class="px-4 py-3 font-semibold text-white">BOS</td>
+            <td class="px-4 py-3 text-gray-400">2026-11-17</td>
+            <td class="px-4 py-3 text-emerald-400 font-mono">0.4998</td>
+            <td class="px-4 py-3 text-amber-400 font-mono">0.2193</td>
+            <td class="px-4 py-3 text-gray-200 font-mono">$254,311.92</td>
+            <td class="px-4 py-3 text-purple-400 font-mono">99</td>
+        </tr>
+        
+        <tr class="border-b border-gray-800 hover:bg-gray-800/50">
+            <td class="px-4 py-3 font-mono text-cyan-400">market_nba_103</td>
+            <td class="px-4 py-3 font-semibold text-white">GSW</td>
+            <td class="px-4 py-3 text-gray-400">2026-11-17</td>
+            <td class="px-4 py-3 text-emerald-400 font-mono">0.4987</td>
+            <td class="px-4 py-3 text-amber-400 font-mono">0.2195</td>
+            <td class="px-4 py-3 text-gray-200 font-mono">$325,071.32</td>
+            <td class="px-4 py-3 text-purple-400 font-mono">127</td>
+        </tr>
+        
+        <tr class="border-b border-gray-800 hover:bg-gray-800/50">
+            <td class="px-4 py-3 font-mono text-cyan-400">market_nba_103</td>
+            <td class="px-4 py-3 font-semibold text-white">LAL</td>
+            <td class="px-4 py-3 text-gray-400">2026-11-17</td>
+            <td class="px-4 py-3 text-emerald-400 font-mono">0.4993</td>
+            <td class="px-4 py-3 text-amber-400 font-mono">0.2332</td>
+            <td class="px-4 py-3 text-gray-200 font-mono">$300,548.22</td>
+            <td class="px-4 py-3 text-purple-400 font-mono">120</td>
+        </tr>
+        
+        <tr class="border-b border-gray-800 hover:bg-gray-800/50">
+            <td class="px-4 py-3 font-mono text-cyan-400">market_nba_104</td>
+            <td class="px-4 py-3 font-semibold text-white">BOS</td>
+            <td class="px-4 py-3 text-gray-400">2026-11-17</td>
+            <td class="px-4 py-3 text-emerald-400 font-mono">0.4976</td>
+            <td class="px-4 py-3 text-amber-400 font-mono">0.2197</td>
+            <td class="px-4 py-3 text-gray-200 font-mono">$242,766.63</td>
+            <td class="px-4 py-3 text-purple-400 font-mono">100</td>
+        </tr>
+        
+        <tr class="border-b border-gray-800 hover:bg-gray-800/50">
+            <td class="px-4 py-3 font-mono text-cyan-400">market_nba_104</td>
+            <td class="px-4 py-3 font-semibold text-white">MIA</td>
+            <td class="px-4 py-3 text-gray-400">2026-11-17</td>
+            <td class="px-4 py-3 text-emerald-400 font-mono">0.5114</td>
+            <td class="px-4 py-3 text-amber-400 font-mono">0.2445</td>
+            <td class="px-4 py-3 text-gray-200 font-mono">$322,701.74</td>
+            <td class="px-4 py-3 text-purple-400 font-mono">128</td>
+        </tr>
+        
+        <tr class="border-b border-gray-800 hover:bg-gray-800/50">
+            <td class="px-4 py-3 font-mono text-cyan-400">market_nba_105</td>
+            <td class="px-4 py-3 font-semibold text-white">DAL</td>
+            <td class="px-4 py-3 text-gray-400">2026-11-17</td>
+            <td class="px-4 py-3 text-emerald-400 font-mono">0.4837</td>
+            <td class="px-4 py-3 text-amber-400 font-mono">0.2344</td>
+            <td class="px-4 py-3 text-gray-200 font-mono">$330,803.16</td>
+            <td class="px-4 py-3 text-purple-400 font-mono">126</td>
+        </tr>
+        
+        <tr class="border-b border-gray-800 hover:bg-gray-800/50">
+            <td class="px-4 py-3 font-mono text-cyan-400">market_nba_105</td>
+            <td class="px-4 py-3 font-semibold text-white">PHX</td>
+            <td class="px-4 py-3 text-gray-400">2026-11-17</td>
+            <td class="px-4 py-3 text-emerald-400 font-mono">0.4911</td>
+            <td class="px-4 py-3 text-amber-400 font-mono">0.2213</td>
+            <td class="px-4 py-3 text-gray-200 font-mono">$348,064.55</td>
+            <td class="px-4 py-3 text-purple-400 font-mono">142</td>
+        </tr>
+        
+        <tr class="border-b border-gray-800 hover:bg-gray-800/50">
+            <td class="px-4 py-3 font-mono text-cyan-400">market_nba_105</td>
+            <td class="px-4 py-3 font-semibold text-white">MIA</td>
+            <td class="px-4 py-3 text-gray-400">2026-11-17</td>
+            <td class="px-4 py-3 text-emerald-400 font-mono">0.5369</td>
+            <td class="px-4 py-3 text-amber-400 font-mono">0.2228</td>
+            <td class="px-4 py-3 text-gray-200 font-mono">$247,061.11</td>
+            <td class="px-4 py-3 text-purple-400 font-mono">104</td>
+        </tr>
+        
+        <tr class="border-b border-gray-800 hover:bg-gray-800/50">
+            <td class="px-4 py-3 font-mono text-cyan-400">market_nba_106</td>
+            <td class="px-4 py-3 font-semibold text-white">GSW</td>
+            <td class="px-4 py-3 text-gray-400">2026-11-17</td>
+            <td class="px-4 py-3 text-emerald-400 font-mono">0.4989</td>
+            <td class="px-4 py-3 text-amber-400 font-mono">0.2238</td>
+            <td class="px-4 py-3 text-gray-200 font-mono">$311,834.37</td>
+            <td class="px-4 py-3 text-purple-400 font-mono">120</td>
+        </tr>
+        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center text-xs text-gray-500 py-4">
+            Proyecto de Bases de Datos Avanzadas • Arquitectura Medallion en Streaming con Apache Kafka & Spark
+        </div>
+
+    </div>
+</body>
+</html>
