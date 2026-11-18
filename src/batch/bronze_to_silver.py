@@ -4,6 +4,13 @@ Aplica deduplicación, filtrado de calidad física, tipado y Broadcast Join con 
 """
 
 import os
+import sys
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+HADOOP_DIR = os.path.join(BASE_DIR, "hadoop")
+os.environ["HADOOP_HOME"] = HADOOP_DIR
+os.environ["PATH"] = os.path.join(HADOOP_DIR, "bin") + os.pathsep + os.environ.get("PATH", "")
+
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, to_timestamp, from_unixtime, to_date, broadcast, when
 
@@ -84,3 +91,4 @@ def run_bronze_to_silver():
 
 if __name__ == "__main__":
     run_bronze_to_silver()
+

@@ -4,6 +4,13 @@ Guarda los eventos crudos con metadatos técnicos en formato Parquet con Checkpo
 """
 
 import os
+import sys
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+HADOOP_DIR = os.path.join(BASE_DIR, "hadoop")
+os.environ["HADOOP_HOME"] = HADOOP_DIR
+os.environ["PATH"] = os.path.join(HADOOP_DIR, "bin") + os.pathsep + os.environ.get("PATH", "")
+
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import from_json, col, current_timestamp
 from pyspark.sql.types import StructType, StructField, StringType, DoubleType, LongType
@@ -12,7 +19,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 BRONZE_PATH = os.path.join(BASE_DIR, "data", "bronze", "ticks")
 CHECKPOINT_PATH = os.path.join(BASE_DIR, "data", "checkpoints", "bronze_ticks")
 
-KAFKA_BROKER = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9094")
+KAFKA_BROKER = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
 KAFKA_TOPIC = os.getenv("KAFKA_TOPIC", "nba.ticks.raw")
 
 def run_bronze_stream():
@@ -25,7 +32,7 @@ def run_bronze_stream():
     # 1. Iniciar sesión de Spark con conector Kafka
     spark = SparkSession.builder \
         .appName("NBA-Bronze-Ingestion-Stream") \
-        .config("spark.jars.packages", "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1") \
+        .config("spark.jars.packages", "org.apache.spark:spark-sql-kafka-0-10_2.13:4.3.0") \
         .config("spark.sql.streaming.checkpointLocation", CHECKPOINT_PATH) \
         .config("spark.sql.shuffle.partitions", "4") \
         .getOrCreate()
@@ -67,13 +74,14 @@ def run_bronze_stream():
     )
 
     # 5. Escribir a la Capa Bronze (Parquet + Checkpointing)
-    print("[*] Iniciando escritura de micro-lotes en la Capa Bronze...")
+    trigger_mode = {"availableNow": True} if "--once" in sys.argv else {"processingTime": "5 seconds"}
+    print(f"[*] Iniciando escritura en Capa Bronze (Trigger: {trigger_mode})...")
     query = parsed_df.writeStream \
         .format("parquet") \
         .outputMode("append") \
         .option("path", BRONZE_PATH) \
         .option("checkpointLocation", CHECKPOINT_PATH) \
-        .trigger(processingTime="5 seconds") \
+        .trigger(**trigger_mode) \
         .start()
 
     try:
@@ -84,3 +92,4 @@ def run_bronze_stream():
 
 if __name__ == "__main__":
     run_bronze_stream()
+

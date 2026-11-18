@@ -102,3 +102,4 @@ A continuación se documentan las etapas críticas del proyecto donde se empleó
 
 ## 3. Conclusión de la Evaluación de IA
 El uso de IA permitió acelerar el desarrollo del esqueleto del proyecto, pero requirió de **conocimientos sólidos de arquitectura de sistemas distribuidos, optimización de motores de ejecución y protocolos de streaming** para transformar sugerencias básicas en una solución de nivel empresarial escalable para 80 millones de registros.
+

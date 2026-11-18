@@ -123,3 +123,4 @@ Para obtener la máxima calificación en el uso de Kafka, se implementan los sig
    window_spec = Window.partitionBy("market_id").orderBy("timestamp").rowsBetween(-20, 0)
    df_silver = df_silver.withColumn("rolling_avg_price", avg("price").over(window_spec))
    ```
+

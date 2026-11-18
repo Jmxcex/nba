@@ -20,3 +20,4 @@ data/raw/*.parquet
 .DS_Store
 .vscode/
 .idea/
+

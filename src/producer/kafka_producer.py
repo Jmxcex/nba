@@ -11,7 +11,7 @@ import sys
 import pandas as pd
 from kafka import KafkaProducer
 
-KAFKA_BROKER = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9094")
+KAFKA_BROKER = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
 KAFKA_TOPIC = os.getenv("KAFKA_TOPIC", "nba.ticks.raw")
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -106,3 +106,4 @@ def start_producing():
 
 if __name__ == "__main__":
     start_producing()
+

@@ -10,3 +10,4 @@ plotly>=5.20.0
 sqlalchemy>=2.0.29
 fastparquet>=2024.2.0
 python-dotenv>=1.0.1
+

@@ -66,3 +66,4 @@ flowchart LR
   * **`dim_market` (Dimensión Mercado):**
     * Atributos: `market_id`, `market_name`, `outcome_type`, `volume_24h`.
 * **Destino de Persistencia:** PostgreSQL (`nba_gold`), permitiendo indexación relacional en columnas clave para dashboards en tiempo real.
+

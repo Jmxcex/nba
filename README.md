@@ -120,3 +120,4 @@ pip install -r requirements.txt
 | **5. Trazabilidad de la IA** | **Excelente (5.0)** | Bitácora completa en [`docs/TRAZABILIDAD_IA.md`](docs/TRAZABILIDAD_IA.md) con prompts exactos, fallos de IA detectados y correcciones. |
 | **6. Uso de Apache Spark** | **Excelente (5.0)** | Structured Streaming, Watermarking, Broadcast Joins y particionado físico optimizado. |
 | **7. Uso de Apache Kafka** | **Excelente (5.0)** | Tópicos con 4 particiones, Message Keys para orden de eventos, compresión GZIP y reintentos. |
+

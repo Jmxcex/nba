@@ -4,6 +4,13 @@ Construye Data Mart analítico y tabla de hechos 'fact_price_volatility' con per
 """
 
 import os
+import sys
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+HADOOP_DIR = os.path.join(BASE_DIR, "hadoop")
+os.environ["HADOOP_HOME"] = HADOOP_DIR
+os.environ["PATH"] = os.path.join(HADOOP_DIR, "bin") + os.pathsep + os.environ.get("PATH", "")
+
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, avg, min, max, stddev, sum as spark_sum, count, round as spark_round
 
@@ -13,7 +20,7 @@ GOLD_PATH = os.path.join(BASE_DIR, "data", "gold")
 
 # Configuración de conexión a PostgreSQL
 PG_HOST = os.getenv("POSTGRES_HOST", "localhost")
-PG_PORT = os.getenv("POSTGRES_PORT", "5432")
+PG_PORT = os.getenv("POSTGRES_PORT", "5433")
 PG_DB = os.getenv("POSTGRES_DB", "nba_gold")
 PG_USER = os.getenv("POSTGRES_USER", "postgres")
 PG_PASSWORD = os.getenv("POSTGRES_PASSWORD", "postgres_password")
@@ -88,3 +95,4 @@ def run_silver_to_gold():
 
 if __name__ == "__main__":
     run_silver_to_gold()
+
