@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+
+# Data Lakehouse local storage
+data/bronze/
+data/silver/
+data/gold/
+data/checkpoints/
+data/raw/*.parquet
+
+# Docker & Logs
+*.log
+.DS_Store
+.vscode/
+.idea/

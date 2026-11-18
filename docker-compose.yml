@@ -1,0 +1,107 @@
+version: '3.8'
+
+services:
+  # ==========================================
+  # APACHE KAFKA (KRaft Mode - Moderno, sin Zookeeper)
+  # ==========================================
+  kafka:
+    image: bitnami/kafka:3.7.0
+    container_name: nba-kafka
+    ports:
+      - "9092:9092"
+      - "9094:9094"
+    environment:
+      - KAFKA_CFG_NODE_ID=1
+      - KAFKA_CFG_PROCESS_ROLES=broker,controller
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka:9093
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093,EXTERNAL://:9094
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092,EXTERNAL://localhost:9094
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
+      - KAFKA_CFG_NUM_PARTITIONS=4
+    volumes:
+      - kafka_data:/bitnami/kafka
+    networks:
+      - nba_network
+
+  # ==========================================
+  # KAFKA UI (Para auditar tópicos y mensajes en tiempo real)
+  # ==========================================
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: nba-kafka-ui
+    ports:
+      - "8085:8080"
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=NBA-Cluster
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:9092
+    depends_on:
+      - kafka
+    networks:
+      - nba_network
+
+  # ==========================================
+  # APACHE SPARK (Master & Worker)
+  # ==========================================
+  spark-master:
+    image: bitnami/spark:3.5.1
+    container_name: nba-spark-master
+    environment:
+      - SPARK_MODE=master
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+    ports:
+      - "8080:8080"  # Spark Web UI
+      - "7077:7077"  # Spark RPC Master
+    volumes:
+      - ./src:/opt/bitnami/spark/src
+      - ./data:/opt/bitnami/spark/data
+    networks:
+      - nba_network
+
+  spark-worker:
+    image: bitnami/spark:3.5.1
+    container_name: nba-spark-worker
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+      - SPARK_WORKER_MEMORY=2G
+      - SPARK_WORKER_CORES=2
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./src:/opt/bitnami/spark/src
+      - ./data:/opt/bitnami/spark/data
+    depends_on:
+      - spark-master
+    networks:
+      - nba_network
+
+  # ==========================================
+  # POSTGRESQL (Serving Layer / Gold Data Mart)
+  # ==========================================
+  postgres:
+    image: postgres:16-alpine
+    container_name: nba-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=nba_gold
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - nba_network
+
+volumes:
+  kafka_data:
+  postgres_data:
+
+networks:
+  nba_network:
+    driver: bridge

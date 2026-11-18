@@ -1,0 +1,12 @@
+# Dependencias de Python para el proyecto NBA Big Data Streaming
+pyspark==3.5.1
+kafka-python-ng>=2.2.2
+pyarrow>=15.0.0
+pandas>=2.2.0
+datasets>=2.18.0
+psycopg2-binary>=2.9.9
+streamlit>=1.33.0
+plotly>=5.20.0
+sqlalchemy>=2.0.29
+fastparquet>=2024.2.0
+python-dotenv>=1.0.1
